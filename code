@@ -1,0 +1,33 @@
+import pandas as pd df1=pd.read_csv("loan.csv") df1.head()
+df=df1.copy() df.head()
+df.drop("Loan_ID",axis=1,inplace=True) df
+df.isnull().sum() df.mean()
+df.fillna(df.mean(),inplace=True) df
+df.isnull().sum() df["Gender"]=df["Gender"].fillna(df["Gender"].mode()[0])
+df["Married"]=df["Married"].fillna(df["Married"].mode()[0]) 
+df["Dependents"]=df["Dependents"].fillna(df["Dependents"].mode()[0])
+df["Self_Employed"]=df["Self_Employed"].fillna(df["Self_Employed"].mode() [0])
+df.isnull().sum()
+from sklearn.preprocessing import LabelEncoder le=LabelEncoder() 
+df["Gender"]=le.fit_transform(df["Gender"]) df["Married"]=le.fit_transform(df["Married"]) 
+df["Education"]=le.fit_transform(df["Education"]) 
+df["Self_Employed"]=le.fit_transform(df["Self_Employed"]) 
+df["Property_Area"]=le.fit_transform(df["Property_Area"]) 
+df["Loan_Status"]=le.fit_transform(df["Loan_Status"]) df.head() 
+df["Dependents"]=df["Dependents"].replace("3+",4) df["Dependents"].value_counts()
+x=df.iloc[:,:-1] xy=df.iloc[:,-1] y
+from sklearn.model_selection import train_test_split 
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=2) 
+x_train.shape
+x_test.shape
+from sklearn.ensemble import RandomForestClassifier 
+rf=RandomForestClassifier(criterion="entropy") rf.fit(x_train,y_train)
+y_pred=rf.predict(x_test) y_pred
+y_test
+from sklearn import metrics accuracy=metrics.accuracy_score(y_test,y_pred) print("The 
+accuracy of the model is",accuracy) 
+test_data=[1,1,0,1,0,2583,2358.0,120.000000,360.0,1.0,2]
+test_data test_pred=rf.predict([[1,1,0,1,0,2583,2358.0,120.000000,360.0,1.0,2]])
+test_pred print(test_pred[0]) if test_pred[0]==1:
+Print('The loan will be approved for the given test data') else:
+Print('The loan will not be approved for the given test data')
